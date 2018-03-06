@@ -34,7 +34,7 @@ public class JPAConfiguration {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost/wd43");
 		dataSource.setUsername("root");
-		dataSource.setPassword("Kakame2010");
+		dataSource.setPassword("");
 		return dataSource;
 	}
 
