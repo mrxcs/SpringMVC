@@ -32,9 +32,9 @@ public class JPAConfiguration {
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost/wd43");
+		dataSource.setUrl("jdbc:mysql://localhost/wd43?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8");/*Char Enc também não funciona*/
 		dataSource.setUsername("root");
-		dataSource.setPassword("Kakame2010");
+		dataSource.setPassword("");
 		return dataSource;
 	}
 
@@ -42,7 +42,15 @@ public class JPAConfiguration {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		properties.setProperty("hibernate.show_sql", "true");
+		properties.setProperty("hibernate.show_sql", "true");		
+		properties.setProperty("hibernate.connection.characterEncoding", "utf8");/*Não funciona, teria que sobre sobre escrever parte de como hibernate funciona, no caso é mais fácil deixar ele criar a tabela (org.hibernate.dialect.MySQL5Dialect) depois alterar para UTF 8 direto no MySQL */
+		properties.setProperty("hibernate.connection.useUnicode", "true");
+		properties.setProperty("hibernate.connection.charSet", "UTF-8");
+		properties.setProperty("connection.characterEncoding", "utf8");
+		properties.setProperty("connection.useUnicode", "true");
+		properties.setProperty("connection.charSet", "UTF-8");/**/
+		/*properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5UTF8InnoDBDialect");/*Também não funcionou, ou não muda ou perde a habildiade de criar tabelas quando elas não existem,*/
+		System.out.println(properties.getProperty("hibernate.dialect"));
 		return properties;
 	}
 		
