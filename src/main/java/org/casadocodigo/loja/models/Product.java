@@ -79,5 +79,16 @@ public class Product {
 	public void setSummaryPath(String summaryPath) {
 		this.summaryPath = summaryPath;
 	}
+	
+	public String toString() {
+		StringBuilder n = new StringBuilder();
+		for (Price i : this.getPrices()) {
+			n.append(i.toString());
+		}
+		return "[ ID = '" +this.getId()+ "', Título = '" +this.getTitle()+
+				"', Descrição = '" +this.getDescription()+
+				"', Páginas = '" +this.getPages()+ "', Lançamento = '" +this.getReleaseDate()+
+				"', Sumário = '" +this.getSummaryPath()+ "'] Preços:" +n.toString();
+	}
 
 }

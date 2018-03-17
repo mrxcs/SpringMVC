@@ -14,13 +14,19 @@ public class ProductDAO {
 	@PersistenceContext
 	private EntityManager manager;
 	
-	public void save(Product product) {
+	public Integer save(Product product) {
 		
 		if (product.getId() == null) {
+			System.out.println(product);
 			manager.persist(product);
+			System.out.println("2");
 		} else {
 			update(product);
 		}
+		
+		manager.flush();
+		System.out.println(product.getId());
+		return  product.getId();
 
 	}
 

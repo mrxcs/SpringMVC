@@ -24,5 +24,9 @@ public class Price {
 	public void setBookType(BookType bookType) {
 		this.bookType = bookType;
 	}
+	
+	public String toString() {
+		return " [ " +this.getBookType()+ ": " +this.getValue()+ " ]";
+	}
 
 }
