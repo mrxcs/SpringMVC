@@ -1,5 +1,6 @@
 package org.casadocodigo.loja.models;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -91,4 +92,10 @@ public class Product {
 				"', Sumário = '" +this.getSummaryPath()+ "'] Preços:" +n.toString();
 	}
 
+	public BigDecimal priceFor(BookType bookType) {
+		return prices
+				.stream()
+				.filter(price -> price.getBookType().equals(bookType))
+				.findFirst().get().getValue();
+	}
 }

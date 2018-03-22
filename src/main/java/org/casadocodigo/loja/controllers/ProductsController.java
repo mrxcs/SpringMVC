@@ -12,10 +12,12 @@ import org.apache.commons.io.IOUtils;
 import org.casadocodigo.loja.daos.ProductDAO;
 import org.casadocodigo.loja.models.BookType;
 import org.casadocodigo.loja.models.Product;
+import org.casadocodigo.loja.models.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +36,9 @@ public class ProductsController {
 
 	@Autowired
 	private HttpServletRequest request;
+	
+	@Autowired
+	private ShoppingCart shoppingCart;
 
 	/*
 	 * Ativação do Validador customizado Hibernate Validator
@@ -72,6 +77,22 @@ public class ProductsController {
 	public ModelAndView list() {
 		ModelAndView modelAndView = new ModelAndView("products/list.jsp");
 		modelAndView.addObject("products", productDAO.list());
+		return modelAndView;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET,  value = "/catalogo", name = "catalago")
+	public ModelAndView clientList() {
+		ModelAndView modelAndView = new ModelAndView("products/client_list.jsp");
+		modelAndView.addObject("products", productDAO.list());
+		return modelAndView;
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/show/{id}", name = "show")
+	public ModelAndView show(@PathVariable("id") Integer id) {
+		ModelAndView modelAndView = new ModelAndView("products/show.jsp");
+		Product product = productDAO.find(id);
+		modelAndView.addObject("product", product);
+		modelAndView.addObject("shoppingCart", shoppingCart);
 		return modelAndView;
 	}
 

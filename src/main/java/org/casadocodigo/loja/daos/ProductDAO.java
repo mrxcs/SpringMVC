@@ -25,7 +25,6 @@ public class ProductDAO {
 		}
 		
 		manager.flush();
-		System.out.println(product.getId());
 		return  product.getId();
 
 	}
