@@ -14,6 +14,7 @@ import org.casadocodigo.loja.models.BookType;
 import org.casadocodigo.loja.models.Product;
 import org.casadocodigo.loja.models.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -81,6 +82,7 @@ public class ProductsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,  value = "/catalogo", name = "catalago")
+	@Cacheable(value="books")
 	public ModelAndView clientList() {
 		ModelAndView modelAndView = new ModelAndView("products/client_list.jsp");
 		modelAndView.addObject("products", productDAO.list());
@@ -117,6 +119,13 @@ public class ProductsController {
 		redirectAttributes.addFlashAttribute("sucesso", "Produto apagado com sucesso");
 		return new ModelAndView("redirect:/produtos");
 	}
+	
+	/* Pois estamos usando um Content Negotiation*/
+	/*@RequestMapping(method = RequestMethod.GET,value="json")
+	@ResponseBody
+	public List<Product> listJson() {
+	return productDAO.list();
+	}*/
 
 	private String write(String baseFolder, MultipartFile file) {
 		System.out.println("Método write Chamado");

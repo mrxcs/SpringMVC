@@ -10,13 +10,13 @@ AbstractAnnotationConfigDispatcherServletInitializer{
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {};
+		return new Class[] {SecurityConfiguration.class,
+				AppWebConfiguration.class,JPAConfiguration.class};
 	}
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[]{AppWebConfiguration.class,
-				JPAConfiguration.class};
+		return new Class[]{};
 	}
 
 	@Override

@@ -12,7 +12,7 @@
 <body>
 	<!-- Eclipse gera um falso erro para o "spring:mvcUrl", ignorar -->
 	<form:form action="${spring:mvcUrl('saveProduct').build()}"
-		method="post" commandName="product" enctype="multipart/form-data">
+		method="post" modelAttribute="product" enctype="multipart/form-data">
 
 <input
 						type="hidden" name="id"

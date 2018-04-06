@@ -40,7 +40,7 @@ public class ProductDAO {
 		manager.remove(p);
 	}
 	
-	public void update(Product product) {
+	private void update(Product product) {
 		manager.merge(product);
 	}
 	
