@@ -7,36 +7,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cadastro de Administradores</title>
+<title>Alterar Senha</title>
 </head>
 <body>
-${sucesso}
-	<form:form action="${spring:mvcUrl('registerAdmin').build()}"
+${sucesso}<br>
+<form:form action="${spring:mvcUrl('registerPassword').build()}"
 		method="post" modelAttribute="user">
 
-		
 		<div>
-			<label for="login">Login:</label>
-			<form:input path="login" />
-			<form:errors path="login" />
+			<label for="old_password">Senha Atual:</label>
+			<input name="old_password" type="password" />	
 		</div>
-		<div>
-			<label for="password">Senha:</label>
+				<div>
+			<label for="password">Nova Senha:</label>
 			<form:input path="password" type="password" />
 			<form:errors path="password" />
 		</div>
-		<div>
-			<label for="name">Nome</label>
-			<form:input path="name" />
-			<form:errors path="name" />
-		</div>
-		<div>
-		
-		<form:checkboxes path="roles" items="${rolesList}"/>
-		<br><form:errors path="roles" />
-		
-		</div>
-			<input type="submit" value="Enviar"/>
+
+<br><input type="submit" value="Enviar"/>
 </form:form>
 </body>
 </html>

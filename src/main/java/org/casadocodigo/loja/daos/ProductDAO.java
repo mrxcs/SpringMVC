@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.casadocodigo.loja.models.Product;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,6 +16,7 @@ public class ProductDAO {
 	@PersistenceContext
 	private EntityManager manager;
 	
+	@CacheEvict(value="ProductList", allEntries=true)
 	public Integer save(Product product) {
 		
 		if (product.getId() == null) {
@@ -29,6 +32,7 @@ public class ProductDAO {
 
 	}
 
+	@Cacheable("ProductList")
 	public List<Product> list() {
 		return manager.createQuery("select distinct(p) from "
 				+ "Product p join fetch p.prices",Product.class)

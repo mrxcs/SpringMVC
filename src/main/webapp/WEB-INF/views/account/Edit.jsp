@@ -7,36 +7,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Cadastro de Administradores</title>
+<title>Editar Conta</title>
 </head>
 <body>
-${sucesso}
-	<form:form action="${spring:mvcUrl('registerAdmin').build()}"
-		method="post" modelAttribute="user">
 
+${sucesso}
+	<form:form action="${spring:mvcUrl('registerEdit').build()}"
+		method="post" modelAttribute="user">
 		
-		<div>
-			<label for="login">Login:</label>
-			<form:input path="login" />
-			<form:errors path="login" />
-		</div>
-		<div>
-			<label for="password">Senha:</label>
-			<form:input path="password" type="password" />
-			<form:errors path="password" />
-		</div>
-		<div>
+		<h2>"${user.login}"</h2>
+		<a href="${spring:mvcUrl('passwordForm').build()}"> Alterar senha</a><br>
+		<br><div>
 			<label for="name">Nome</label>
 			<form:input path="name" />
 			<form:errors path="name" />
 		</div>
-		<div>
+		<c:if test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
+			<br><div>
 		
-		<form:checkboxes path="roles" items="${rolesList}"/>
-		<br><form:errors path="roles" />
+			<form:checkboxes path="roles" items="${rolesList}"/>
+			<br><form:errors path="roles" />
 		
-		</div>
-			<input type="submit" value="Enviar"/>
+			</div>
+		</c:if>
+			<br><input type="submit" value="Enviar"/>
 </form:form>
+
 </body>
 </html>

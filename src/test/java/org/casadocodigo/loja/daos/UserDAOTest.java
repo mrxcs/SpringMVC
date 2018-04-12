@@ -41,11 +41,11 @@ public class UserDAOTest {
 		user.setRoles(acessos);
 		
 		
-		DAO.save(user);
+		DAO.novo(user);
 		assertEquals(DAO.loadUserByUsername(user.getLogin()).getLogin(), user.getLogin());
 		
 		user.setName("Mudou");
-		DAO.save(user);
+		DAO.update(user);
 		assertEquals(DAO.loadUserByUsername(user.getLogin()).getLogin(), user.getLogin());
 		
 		DAO.disable(user);

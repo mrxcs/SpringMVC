@@ -22,7 +22,7 @@ ${sucesso}
 		</div>
 			<div>
 			<label for="password">Senha:</label>
-			<form:input path="password" />
+			<form:input path="password" type="password" />
 			<form:errors path="password" />
 		</div>
 			<div>

@@ -33,10 +33,8 @@ public class UserDAO implements UserDetailsService{
 	return users.get(0);
 	}
 	
-	public String save(User user) {
+	public String novo(User user) {
 		Boolean exists = true;
-		
-		System.out.println("No DAO: "+ user.getLogin()+ " e " + user.getName());
 		
 		try {
 			loadUserByUsername(user.getUsername());
@@ -48,13 +46,13 @@ public class UserDAO implements UserDetailsService{
 			user.setPassword(encodePassword(user.getPassword()));
 			em.persist(user);
 		} else {
-			update(user);
+			throw new IllegalArgumentException("Usuário já existe");
 		}
 		em.flush();
 		return  user.getUsername(); 
 	}
 	
-	private void update(User user) {
+	public void update(User user) {
 		User dbUser = loadUserByUsername(user.getUsername());
 		if (!(user.getPassword().equals(dbUser.getPassword()))) {
 			user.setPassword(encodePassword(user.getPassword()));
@@ -64,12 +62,18 @@ public class UserDAO implements UserDetailsService{
 	
 	public void enable (User user) {
 		user.setEnabled(true);
-		save(user);
+		update(user);
 	}
 	
 	public void disable (User user) {
 		user.setEnabled(false);
-		save(user);
+		update(user);
+	}
+	
+	public Boolean isPasswordMatches(String old, String UserLogin) {
+		User dbUser = loadUserByUsername(UserLogin);
+		CharSequence old_char = old;
+		return Encoder.matches(old_char, dbUser.getPassword());
 	}
 	
 	private String encodePassword (String p) {
