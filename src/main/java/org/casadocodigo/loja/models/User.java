@@ -10,11 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Size;
 
+import org.casadocodigo.loja.annotation.PasswordMatches;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+@PasswordMatches
 public class User implements UserDetails{
 	
 	/**
@@ -27,6 +29,7 @@ public class User implements UserDetails{
 	private String login;
 	@NotBlank
 	private String password;
+	private String matchingPassword;
 	@Size(min=5, max=40, message="Entre {2} e {1} caracteres")
 	private String name;
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -88,6 +91,12 @@ public class User implements UserDetails{
 	
 	public void setEnabled(Boolean b) {
 		this.enabled = b;
+	}
+	public String getMatchingPassword() {
+		return matchingPassword;
+	}
+	public void setMatchingPassword(String matchingPassword) {
+		this.matchingPassword = matchingPassword;
 	}
 	
 }

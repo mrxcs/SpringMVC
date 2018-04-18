@@ -23,6 +23,11 @@ ${sucesso}<br>
 			<form:input path="password" type="password" />
 			<form:errors path="password" />
 		</div>
+		<div>
+			<label for="matchingPassword">Confirme a senha:</label>
+			<form:input path="matchingPassword" type="password" />
+			<form:errors path="matchingPassword" />
+		</div>
 
 <br><input type="submit" value="Enviar"/>
 </form:form>

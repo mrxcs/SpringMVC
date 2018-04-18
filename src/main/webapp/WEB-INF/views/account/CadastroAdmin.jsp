@@ -14,6 +14,13 @@ ${sucesso}
 	<form:form action="${spring:mvcUrl('registerAdmin').build()}"
 		method="post" modelAttribute="user">
 
+
+<spring:hasBindErrors name="user">
+	<c:forEach var="gE" items="${errors.getGlobalErrors()}">
+		<p>${gE.getDefaultMessage()}</p>
+	</c:forEach>
+</spring:hasBindErrors>
+
 		
 		<div>
 			<label for="login">Login:</label>
@@ -24,6 +31,11 @@ ${sucesso}
 			<label for="password">Senha:</label>
 			<form:input path="password" type="password" />
 			<form:errors path="password" />
+		</div>
+		<div>
+			<label for="matchingPassword">Confirme a senha:</label>
+			<form:input path="matchingPassword" type="password" />
+			<form:errors path="matchingPassword" />
 		</div>
 		<div>
 			<label for="name">Nome</label>

@@ -43,7 +43,9 @@ public class UserDAO implements UserDetailsService{
 		}
 		if (!(exists)) {
 			System.out.println("Cadastrando "+user.getUsername());
-			user.setPassword(encodePassword(user.getPassword()));
+			String encoded = encodePassword(user.getPassword());
+			user.setPassword(encoded);
+			user.setMatchingPassword(encoded);
 			em.persist(user);
 		} else {
 			throw new IllegalArgumentException("Usuário já existe");
@@ -56,6 +58,7 @@ public class UserDAO implements UserDetailsService{
 		User dbUser = loadUserByUsername(user.getUsername());
 		if (!(user.getPassword().equals(dbUser.getPassword()))) {
 			user.setPassword(encodePassword(user.getPassword()));
+			user.setMatchingPassword(encodePassword(user.getMatchingPassword()));
 		}
 		em.merge(user);
 	}

@@ -36,7 +36,8 @@ public class UserDAOTest {
 		
 		User user = new User();
 		user.setLogin("mrxcs");
-		user.setPassword("123");
+		user.setPassword("123456");
+		user.setMatchingPassword("123456");
 		user.setName("adminTesteN");
 		user.setRoles(acessos);
 		
