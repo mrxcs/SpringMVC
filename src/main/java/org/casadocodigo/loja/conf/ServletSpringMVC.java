@@ -26,7 +26,10 @@ AbstractAnnotationConfigDispatcherServletInitializer{
 	
 	@Override
 	protected void customizeRegistration(Dynamic registration) {
-	registration.setMultipartConfig(new MultipartConfigElement(""));
-	}
+	registration.setMultipartConfig(new MultipartConfigElement(""));/*Para receber arquivos*/
+	
+	boolean done = registration.setInitParameter("throwExceptionIfNoHandlerFound", "true"); // -> true
+    if(!done) throw new RuntimeException(); /*Para fazer o ControllerAdvice com custom error funcionar*/
+	} 
 
 }
