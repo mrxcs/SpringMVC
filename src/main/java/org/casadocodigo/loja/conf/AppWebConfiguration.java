@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.format.datetime.DateFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
@@ -22,6 +23,8 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -30,7 +33,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @ComponentScan(basePackages="org.casadocodigo.loja")
 @EnableCaching
 /*@ImportResource({"classpath:beans.xml"})*/
-public class AppWebConfiguration {
+public class AppWebConfiguration extends WebMvcConfigurerAdapter{
 	
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
@@ -88,6 +91,10 @@ public class AppWebConfiguration {
 		return resolver;
 	}	
 	
-	
+	@Override
+	public void addViewControllers (ViewControllerRegistry registry) {
+		registry.addViewController("/acesso").setViewName("login/CustomModel.jsp");
+		registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	  }
 	
 }

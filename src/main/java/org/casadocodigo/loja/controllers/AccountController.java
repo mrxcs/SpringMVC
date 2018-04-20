@@ -2,6 +2,8 @@ package org.casadocodigo.loja.controllers;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -12,8 +14,10 @@ import org.casadocodigo.loja.models.Role;
 import org.casadocodigo.loja.models.User;
 import org.casadocodigo.loja.validation.EditAccountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -182,6 +186,15 @@ RedirectAttributes redirectAttributes, @RequestParam("old_password") String[] n)
 		}
 		redirectAttributes.addFlashAttribute("sucesso", "Senha alterada com sucesso");
 		return new ModelAndView("redirect:password");
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET, name = "logout")
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
+	    return "redirect:/acesso?logout=true";
 	}
 	
 	private void addUserAcess(User user) {

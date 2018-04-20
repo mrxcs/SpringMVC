@@ -43,9 +43,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	.antMatchers("/produtos/**").permitAll()
 	.antMatchers("/account/**").permitAll()
 	.anyRequest().authenticated()
+	.and().exceptionHandling().accessDeniedPage("/403")
 	.and().formLogin()
-	.and()
-    .exceptionHandling().accessDeniedPage("/403");
-	}
+    .loginPage("/acesso")
+    .permitAll()
+    .failureUrl("/acesso?error=true")
+    .and()
+    .logout().permitAll()
+    .logoutSuccessUrl("/acesso?logout=true");
+ 	}
 	
 }
