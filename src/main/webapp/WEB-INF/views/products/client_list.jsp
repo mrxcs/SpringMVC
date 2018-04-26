@@ -4,13 +4,34 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lista de Produtos</title>
-</head>
-<body>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
+<t:page title="Catálogo" bodyClass="catalogo">
+
+	<jsp:attribute	name="extraScripts">
+	...
+	</jsp:attribute>
+	
+	
+	<jsp:attribute	name="cssImports">
+	
+	<link href="<c:url value="/resources/css/client_list.css" />" rel="stylesheet">
+	
+	</jsp:attribute>
+
+
+	<jsp:body>
+
+<sec:authorize var="loggedIn" access="isAuthenticated()" />
+<c:choose>
+    <c:when test="${loggedIn}">
+           Olá <c:out value="${pageContext.request.userPrincipal.name}" />     
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
+
 	<table>
 		<c:forEach items="${products}" var="product">
 			<tr>
@@ -24,5 +45,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-</body>
-</html>
+</jsp:body>
+
+</t:page>
