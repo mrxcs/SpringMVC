@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar -Dspring.profiles.active=heroku_db target/dependency/webapp-runner.jar --port $PORT target/*.war
+web: java $JAVA_OPTS -jar -Dspring.profiles.active=heroku_db target/dependency/webapp-runner.jar -Dspring.datasource.url=jdbc:postgres://ynxuhswdaomjzn:89d7eb5aefe00ee6cec55989018448d0fea419a3bf7c3da1d7c6938c35965eb3@ec2-50-16-196-238.compute-1.amazonaws.com:5432/dbg5rhuqgsge0f --port $PORT target/*.war
