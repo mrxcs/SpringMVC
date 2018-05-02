@@ -31,6 +31,15 @@
     <c:otherwise>
     </c:otherwise>
 </c:choose>
+ou 
+<sec:authorize var="loggedIn2" access="isAuthenticated()" />
+<c:choose>
+    <c:when test="${loggedIn2}">
+    	<spring:message	code="users.welcome" arguments="${pageContext.request.userPrincipal.name}"/>    
+    </c:when>
+    <c:otherwise>
+    </c:otherwise>
+</c:choose>
 
 	<table>
 		<c:forEach items="${products}" var="product">

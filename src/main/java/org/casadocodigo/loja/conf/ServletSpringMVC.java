@@ -1,8 +1,11 @@
 package org.casadocodigo.loja.conf;
 
 import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ServletSpringMVC extends 
@@ -11,7 +14,7 @@ AbstractAnnotationConfigDispatcherServletInitializer{
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
 		return new Class[] {SecurityConfiguration.class,
-				AppWebConfiguration.class,JPAConfiguration.class};
+				AppWebConfiguration.class,JPAConfiguration.class,JPAHerokuConfiguration.class};
 	}
 
 	@Override
@@ -32,4 +35,10 @@ AbstractAnnotationConfigDispatcherServletInitializer{
     if(!done) throw new RuntimeException(); /*Para fazer o ControllerAdvice com custom error funcionar*/
 	} 
 
+	@Override
+	public void onStartup(ServletContext servletContext) throws ServletException {
+		super.onStartup(servletContext);
+		servletContext.addListener(RequestContextListener.class);
+		servletContext.setInitParameter("spring.profiles.active","local_db");
+	}
 }

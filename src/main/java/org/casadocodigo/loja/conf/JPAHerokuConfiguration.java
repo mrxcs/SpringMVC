@@ -1,12 +1,16 @@
 package org.casadocodigo.loja.conf;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,11 +20,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
-@Profile("local_db")
-public class JPAConfiguration {
+@Profile("heroku_db")
+public class JPAHerokuConfiguration {
+	
+	@Autowired
+	private	Environment	environment;
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory() throws URISyntaxException {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
 		em.setPackagesToScan(new String[] { "org.casadocodigo.loja.models" });
@@ -31,28 +38,24 @@ public class JPAConfiguration {
 	}
 
 	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost/wd43?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8");/*Char Enc também não funciona*/
-		dataSource.setUsername("root");
-		dataSource.setPassword("Kakame2010");
-		return dataSource;
+	public DataSource dataSource() throws	URISyntaxException{
+		DriverManagerDataSource	dataSource = new DriverManagerDataSource();
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		URI dbUrl= new	URI(environment.getProperty("DATABASE_URL"));
+		dataSource.setUrl("jdbc:postgresql://" + dbUrl.getHost() + ":" + dbUrl.getPort() + dbUrl.getPath());
+		dataSource.setUsername(dbUrl.getUserInfo().split(":")[0]);
+		dataSource.setPassword(dbUrl.getUserInfo().split(":")[1]);
+		return	dataSource;
 	}
 
 	private Properties additionalProperties() {
-		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "update");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		properties.setProperty("hibernate.show_sql", "true");		
-		properties.setProperty("hibernate.connection.characterEncoding", "utf8");/*Não funciona, teria que sobre sobre escrever parte de como hibernate funciona, no caso é mais fácil deixar ele criar a tabela (org.hibernate.dialect.MySQL5Dialect) depois alterar para UTF 8 direto no MySQL */
+		Properties properties = new Properties();		
+		properties.setProperty("hibernate.connection.characterEncoding", "utf8");
 		properties.setProperty("hibernate.connection.useUnicode", "true");
 		properties.setProperty("hibernate.connection.charSet", "UTF-8");
 		properties.setProperty("connection.characterEncoding", "utf8");
 		properties.setProperty("connection.useUnicode", "true");
-		properties.setProperty("connection.charSet", "UTF-8");/**/
-		/*properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5UTF8InnoDBDialect");/*Também não funcionou, ou não muda ou perde a habildiade de criar tabelas quando elas não existem,*/
-		System.out.println(properties.getProperty("hibernate.dialect"));
+		properties.setProperty("connection.charSet", "UTF-8");
 		return properties;
 	}
 		

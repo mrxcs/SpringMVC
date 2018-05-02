@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
 
   <head>
@@ -34,5 +35,6 @@
             </fieldset>
         </form>
     </div>
+    <a href="${spring:mvcUrl('userForm').build()}">Cadastrar</a>
   </body>
 </html>
