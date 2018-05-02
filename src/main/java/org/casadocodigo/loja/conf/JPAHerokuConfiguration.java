@@ -42,7 +42,7 @@ public class JPAHerokuConfiguration {
 		DriverManagerDataSource	dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		URI dbUrl= new	URI(environment.getProperty("DATABASE_URL"));
-		dataSource.setUrl("jdbc:postgresql://ynxuhswdaomjzn:89d7eb5aefe00ee6cec55989018448d0fea419a3bf7c3da1d7c6938c35965eb3@" + dbUrl.getHost() + ":" + dbUrl.getPort()+ "/" + dbUrl.getPath());
+		dataSource.setUrl("jdbc:postgresql://" + dbUrl.getHost() + ":" + dbUrl.getPort()+ "/" + dbUrl.getPath());
 		/*dataSource.setUrl("jdbc:postgresql://user:pass@" + dbUrl.getHost() + ":" + dbUrl.getPort()+ "/" + dbUrl.getPath());*/
 		dataSource.setUsername("ynxuhswdaomjzn");
 		dataSource.setPassword("89d7eb5aefe00ee6cec55989018448d0fea419a3bf7c3da1d7c6938c35965eb3");
