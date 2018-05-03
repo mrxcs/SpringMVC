@@ -41,16 +41,20 @@ public class JPAHerokuConfiguration {
 	public DataSource dataSource() throws	URISyntaxException{
 		DriverManagerDataSource	dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
-		URI dbUrl= new	URI(environment.getProperty("DATABASE_URL"));
-		dataSource.setUrl("jdbc:postgresql://" + dbUrl.getHost() + ":" + dbUrl.getPort() + dbUrl.getPath());
-		dataSource.setUsername(dbUrl.getUserInfo().split(":")[0]);
-		dataSource.setPassword(dbUrl.getUserInfo().split(":")[1]);
+		/*<!-- Remote -->
+		URI dbUri= new	URI("");
+		dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()+"?sslmode=require&");*/
+		URI dbUri= new	URI(environment.getProperty("DATABASE_URL"));
+		dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath());
+		dataSource.setUsername(dbUri.getUserInfo().split(":")[0]);
+		dataSource.setPassword(dbUri.getUserInfo().split(":")[1]);
 		return	dataSource;
 
 	}
 
 	private Properties additionalProperties() {
-		Properties properties = new Properties();		
+		Properties properties = new Properties();
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.connection.characterEncoding", "utf8");
 		properties.setProperty("hibernate.connection.useUnicode", "true");
 		properties.setProperty("hibernate.connection.charSet", "UTF-8");
