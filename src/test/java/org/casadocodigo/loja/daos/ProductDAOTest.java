@@ -9,6 +9,7 @@ import org.casadocodigo.loja.models.ProductTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.casadocodigo.loja.conf.JPAConfiguration;
@@ -17,6 +18,7 @@ import org.casadocodigo.loja.conf.JPAConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class) 
 @ContextConfiguration(classes={JPAConfiguration.class, ProductDAO.class} )
 @Transactional
+@ActiveProfiles("local_db")
 public class ProductDAOTest {
 
 	@Autowired	

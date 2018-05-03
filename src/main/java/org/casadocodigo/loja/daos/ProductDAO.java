@@ -34,9 +34,10 @@ public class ProductDAO {
 
 	@Cacheable("ProductList")
 	public List<Product> list() {
-		return manager.createQuery("select distinct(p) from "
+		return manager.createQuery("SELECT p FROM Product p", Product.class).getResultList();
+		/*return manager.createQuery("select distinct(p) from "
 				+ "Product p join fetch p.prices",Product.class)
-				.getResultList();
+				.getResultList();*/
 	}
 	
 	public void delete(Integer productID) {
@@ -49,11 +50,11 @@ public class ProductDAO {
 	}
 	
 	public Product find(Integer productID) {
-		
-		Product p = manager.createQuery("select distinct(p) from "
+		return manager.createQuery("SELECT p FROM Product p WHERE p.id="+productID+"", Product.class).getSingleResult();
+		/*Product p = manager.createQuery("select distinct(p) from "
 				+ "Product p join fetch p.prices WHERE p.id="+productID+"",Product.class)
 				.getSingleResult();
-		return p;
+		return p;*/
 	}
 
 }

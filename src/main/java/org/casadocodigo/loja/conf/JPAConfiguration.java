@@ -43,8 +43,7 @@ public class JPAConfiguration {
 	private Properties additionalProperties() {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.hbm2ddl.auto", "update");
-		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-		properties.setProperty("hibernate.show_sql", "true");		
+		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");		
 		properties.setProperty("hibernate.connection.characterEncoding", "utf8");/*Não funciona, teria que sobre sobre escrever parte de como hibernate funciona, no caso é mais fácil deixar ele criar a tabela (org.hibernate.dialect.MySQL5Dialect) depois alterar para UTF 8 direto no MySQL */
 		properties.setProperty("hibernate.connection.useUnicode", "true");
 		properties.setProperty("hibernate.connection.charSet", "UTF-8");
