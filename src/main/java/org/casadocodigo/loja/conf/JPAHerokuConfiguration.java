@@ -42,7 +42,7 @@ public class JPAHerokuConfiguration {
 		URI dbUri= new	URI("");
 		dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()+"?sslmode=require&");*/
 		URI dbUri= new	URI("postgres://ynxuhswdaomjzn:89d7eb5aefe00ee6cec55989018448d0fea419a3bf7c3da1d7c6938c35965eb3@ec2-50-16-196-238.compute-1.amazonaws.com:5432/dbg5rhuqgsge0f");
-		dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath());
+		dataSource.setUrl("jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()+"?sslmode=require&");
 		dataSource.setUsername(dbUri.getUserInfo().split(":")[0]);
 		dataSource.setPassword(dbUri.getUserInfo().split(":")[1]);
 		return	dataSource;
