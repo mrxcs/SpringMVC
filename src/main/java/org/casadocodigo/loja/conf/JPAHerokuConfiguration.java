@@ -56,6 +56,7 @@ public class JPAHerokuConfiguration {
 		Properties properties = new Properties();
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 		properties.setProperty("hibernate.connection.characterEncoding", "utf8");
+		properties.setProperty("hibernate.hbm2ddl.auto","update");
 		properties.setProperty("hibernate.connection.useUnicode", "true");
 		properties.setProperty("hibernate.connection.charSet", "UTF-8");
 		properties.setProperty("connection.characterEncoding", "utf8");
