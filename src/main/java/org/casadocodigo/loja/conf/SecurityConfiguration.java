@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	.antMatchers("/shopping/**").permitAll()
 	.antMatchers("/produtos/**").permitAll()
 	.antMatchers("/account/**").permitAll()
-	.anyRequest().authenticated()
+	/*.anyRequest().authenticated()*/
 	.and().exceptionHandling().accessDeniedPage("/403")
 	.and().formLogin()
     .loginPage("/acesso")
