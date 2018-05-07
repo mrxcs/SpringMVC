@@ -1,16 +1,16 @@
 package org.casadocodigo.loja.validation;
 
 import org.casadocodigo.loja.daos.UserDAO;
-import org.casadocodigo.loja.models.User;
+import org.casadocodigo.loja.models.AUser;
 import org.springframework.validation.BindingResult;
 
 public class EditAccountValidator {
 	
-	private User output;
+	private AUser output;
 		
-	public EditAccountValidator(User n, BindingResult bR, UserDAO DAO) {
+	public EditAccountValidator(AUser n, BindingResult bR, UserDAO DAO) {
 		
-		User dbUser = DAO.loadUserByUsername(n.getLogin());
+		AUser dbUser = DAO.loadUserByUsername(n.getLogin());
 		
 		if(!(bR.hasFieldErrors("name"))) {
 			dbUser.setName(n.getName());
@@ -23,7 +23,7 @@ public class EditAccountValidator {
 		this.output = dbUser;  	
 	}
 	
-	public User getOutput() {
+	public AUser getOutput() {
 		return this.output;
 	}
 	

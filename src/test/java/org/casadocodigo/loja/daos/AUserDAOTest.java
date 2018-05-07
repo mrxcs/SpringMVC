@@ -8,20 +8,24 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.casadocodigo.loja.conf.JPAConfiguration;
+import org.casadocodigo.loja.conf.JPAlocalPostgreeSQLConfiguration;
 import org.casadocodigo.loja.conf.SecurityConfiguration;
 import org.casadocodigo.loja.models.Role;
-import org.casadocodigo.loja.models.User;
+import org.casadocodigo.loja.models.AUser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
-@ContextConfiguration(classes={JPAConfiguration.class, User.class, Role.class, UserDAO.class, SecurityConfiguration.class} )
+@ContextConfiguration(classes={JPAConfiguration.class, JPAlocalPostgreeSQLConfiguration.class, AUser.class, Role.class, UserDAO.class, SecurityConfiguration.class} )
 @Transactional
-public class UserDAOTest {
+/*@ActiveProfiles("local_db")*/
+@ActiveProfiles("localPostgree_db")
+public class AUserDAOTest {
 	
 	@Autowired	
 	private UserDAO DAO;
@@ -34,7 +38,7 @@ public class UserDAOTest {
 		acesso.setName("ROLE_ADMIN");
 		acessos.add(acesso);
 		
-		User user = new User();
+		AUser user = new AUser();
 		user.setLogin("mrxcs");
 		user.setPassword("123456");
 		user.setMatchingPassword("123456");
@@ -45,12 +49,12 @@ public class UserDAOTest {
 		DAO.novo(user);
 		assertEquals(DAO.loadUserByUsername(user.getLogin()).getLogin(), user.getLogin());
 		
-		user.setName("Mudou");
+		user.setName("Marcelo R Moreira");
 		DAO.update(user);
 		assertEquals(DAO.loadUserByUsername(user.getLogin()).getLogin(), user.getLogin());
 		
 		DAO.disable(user);
-		User retorno = DAO.loadUserByUsername(user.getLogin());
+		AUser retorno = DAO.loadUserByUsername(user.getLogin());
 		assertEquals(retorno.isEnabled(), false);
 		
 		DAO.enable(user);

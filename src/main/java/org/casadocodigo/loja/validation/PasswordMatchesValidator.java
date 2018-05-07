@@ -4,7 +4,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.casadocodigo.loja.annotation.PasswordMatches;
-import org.casadocodigo.loja.models.User;
+import org.casadocodigo.loja.models.AUser;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
 	
@@ -13,7 +13,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordMat
     }
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){   
-        User user = (User) obj;
+        AUser user = (AUser) obj;
         return user.getPassword().equals(user.getMatchingPassword());    
     } 
 }

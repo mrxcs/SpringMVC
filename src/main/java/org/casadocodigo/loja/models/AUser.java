@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @PasswordMatches
-public class User implements UserDetails{
+public class AUser implements UserDetails{
 	
 	/**
 	 * 

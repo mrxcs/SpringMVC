@@ -11,7 +11,7 @@ import org.casadocodigo.loja.CustomEditor.RoleEditor;
 import org.casadocodigo.loja.daos.RoleDAO;
 import org.casadocodigo.loja.daos.UserDAO;
 import org.casadocodigo.loja.models.Role;
-import org.casadocodigo.loja.models.User;
+import org.casadocodigo.loja.models.AUser;
 import org.casadocodigo.loja.validation.EditAccountValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -40,7 +40,7 @@ public class AccountController {
 	private UserDAO userDAO;
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.GET, name = "adminForm")
-	public ModelAndView adminForm(User user) {
+	public ModelAndView adminForm(AUser user) {
 		ModelAndView modelAndView = new ModelAndView("account/CadastroAdmin.jsp");
 		modelAndView.addObject("rolesList", roleDAO.getRoleList());
 		modelAndView.addObject("user", user);
@@ -48,7 +48,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value = "/admin", method = RequestMethod.POST, name = "registerAdmin")
-	public ModelAndView registerAdmin(@Valid User user, BindingResult bindingResult,
+	public ModelAndView registerAdmin(@Valid AUser user, BindingResult bindingResult,
 RedirectAttributes redirectAttributes) {
 		
 		if (user.getRoles() == null) {
@@ -71,14 +71,14 @@ RedirectAttributes redirectAttributes) {
 	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.GET, name = "userForm")
-	public ModelAndView userForm(User user) {
+	public ModelAndView userForm(AUser user) {
 		ModelAndView modelAndView = new ModelAndView("account/CadastroUser.jsp");
 		modelAndView.addObject("user", user);
 		return modelAndView;		
 	}
 	
 	@RequestMapping(value = "/user", method = RequestMethod.POST, name = "registerUser")
-	public ModelAndView registerUser(@Valid User user, BindingResult bindingResult,
+	public ModelAndView registerUser(@Valid AUser user, BindingResult bindingResult,
 RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
@@ -122,10 +122,10 @@ RedirectAttributes redirectAttributes) {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.GET, name = "editForm")
-	public ModelAndView editForm(User user) {
+	public ModelAndView editForm(AUser user) {
 		ModelAndView modelAndView = new ModelAndView("account/Edit.jsp");
 		String username = getUserName();
-		User editUser = userDAO.loadUserByUsername(username);
+		AUser editUser = userDAO.loadUserByUsername(username);
 		modelAndView.addObject("rolesList", roleDAO.getRoleList());
 		if(user.getLogin() == null) {
 			modelAndView.addObject("user", editUser);
@@ -137,12 +137,12 @@ RedirectAttributes redirectAttributes) {
 	}
 	
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, name = "registerEdit")
-	public ModelAndView registerEdit(@Valid User user, BindingResult bindingResult,
+	public ModelAndView registerEdit(@Valid AUser user, BindingResult bindingResult,
 RedirectAttributes redirectAttributes) {
 		
 		String username = getUserName();
 		user.setLogin(username);
-		User mergeUser = new EditAccountValidator(user, bindingResult, userDAO).getOutput();
+		AUser mergeUser = new EditAccountValidator(user, bindingResult, userDAO).getOutput();
 		
 		try {
 			userDAO.update(mergeUser);		
@@ -154,14 +154,14 @@ RedirectAttributes redirectAttributes) {
 	}
 	
 	@RequestMapping(value = "/password", method = RequestMethod.GET, name = "passwordForm")
-	public ModelAndView passwordForm(User user) {
+	public ModelAndView passwordForm(AUser user) {
 		ModelAndView modelAndView = new ModelAndView("account/EditPassword.jsp");
 		modelAndView.addObject("user", user);
 		return modelAndView;		
 	}
 	
 	@RequestMapping(value = "/password", method = RequestMethod.POST, name = "registerPassword")
-	public ModelAndView registerPassword(@Valid User user, BindingResult bindingResult,
+	public ModelAndView registerPassword(@Valid AUser user, BindingResult bindingResult,
 RedirectAttributes redirectAttributes, @RequestParam("old_password") String[] n) {
 		
 		if(bindingResult.hasFieldErrors("password")) {
@@ -176,7 +176,7 @@ RedirectAttributes redirectAttributes, @RequestParam("old_password") String[] n)
 		}
 					
 	    user.setLogin(username);
-		User mergeUser = new EditAccountValidator(user, bindingResult, userDAO).getOutput();
+		AUser mergeUser = new EditAccountValidator(user, bindingResult, userDAO).getOutput();
 		
 		try {
 			userDAO.update(mergeUser);		
@@ -197,7 +197,7 @@ RedirectAttributes redirectAttributes, @RequestParam("old_password") String[] n)
 	    return "redirect:/acesso?logout=true";
 	}
 	
-	private void addUserAcess(User user) {
+	private void addUserAcess(AUser user) {
 		ArrayList<Role> access = new ArrayList<>();
 		Role comum = new Role();
 		comum.setName("ROLE_Comprador");

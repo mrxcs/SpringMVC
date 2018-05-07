@@ -13,12 +13,14 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.casadocodigo.loja.conf.JPAConfiguration;
+import org.casadocodigo.loja.conf.JPAlocalPostgreeSQLConfiguration;
 
 
 @RunWith(SpringJUnit4ClassRunner.class) 
-@ContextConfiguration(classes={JPAConfiguration.class, ProductDAO.class} )
+@ContextConfiguration(classes={JPAConfiguration.class, JPAlocalPostgreeSQLConfiguration.class, ProductDAO.class} )
 @Transactional
-@ActiveProfiles("local_db")
+/*@ActiveProfiles("local_db")*/
+@ActiveProfiles("localPostgree_db")
 public class ProductDAOTest {
 
 	@Autowired	
