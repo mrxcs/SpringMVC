@@ -36,7 +36,7 @@ public class JPAConfiguration {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost/wd43?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8");/*Char Enc também não funciona*/
 		dataSource.setUsername("root");
-		dataSource.setPassword("Kakame2010");
+		dataSource.setPassword("");
 		return dataSource;
 	}
 
