@@ -34,16 +34,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception
 	{
 	http.authorizeRequests()
-	/*.antMatchers("/produtos/form").hasRole("ADMIN")*/
-	/*.antMatchers("/produtos/form/").hasRole("ADMIN")*/
-	/*.antMatchers(HttpMethod.GET, "/produtos/").hasRole("ADMIN")*/
-	/*.antMatchers(HttpMethod.POST,"/produtos/").hasRole("ADMIN")*/
-	/*.antMatchers("/produtos").hasRole("ADMIN")*/
-	/*.antMatchers("/account/admin").hasRole("ADMIN")*/
+	.antMatchers("/produtos/form").hasRole("Admin")
+	.antMatchers("/produtos/form/").hasRole("Admin")
+	.antMatchers(HttpMethod.GET, "/produtos/").hasRole("Admin")
+	.antMatchers(HttpMethod.POST,"/produtos/").hasRole("Admin")
+	.antMatchers("/produtos").hasRole("Admin")
+	.antMatchers("/account/admin").hasRole("Admin")
 	.antMatchers("/shopping/**").permitAll()
 	.antMatchers("/produtos/**").permitAll()
 	.antMatchers("/account/**").permitAll()
-	/*.anyRequest().authenticated()*/
+	.anyRequest().authenticated()
 	.and().exceptionHandling().accessDeniedPage("/403")
 	.and().formLogin()
     .loginPage("/acesso")
