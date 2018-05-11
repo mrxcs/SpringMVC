@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -16,6 +17,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
+@EnableJpaRepositories(basePackages = "org.casadocodigo.loja.repositories")
 @Profile("local_db")
 public class JPAConfiguration {
 
@@ -23,7 +25,7 @@ public class JPAConfiguration {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan(new String[] { "org.casadocodigo.loja.models" });
+		em.setPackagesToScan(new String[] { "org.casadocodigo.loja.models", "org.casadocodigo.loja.repositories" });
 		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 		em.setJpaVendorAdapter(vendorAdapter);
 		em.setJpaProperties(additionalProperties());
@@ -36,7 +38,7 @@ public class JPAConfiguration {
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost/wd43?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=UTF-8");/*Char Enc também não funciona*/
 		dataSource.setUsername("root");
-		dataSource.setPassword("");
+		dataSource.setPassword("Kakame2010");
 		return dataSource;
 	}
 

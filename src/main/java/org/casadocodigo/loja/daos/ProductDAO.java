@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.casadocodigo.loja.models.Product;
+import org.casadocodigo.loja.repositories.ProductDAO_SpringDataJPA_Interface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
@@ -16,20 +18,22 @@ public class ProductDAO {
 	@PersistenceContext
 	private EntityManager manager;
 	
+	@Autowired
+	private ProductDAO_SpringDataJPA_Interface SpringDAO;
+	
 	@CacheEvict(value="ProductList", allEntries=true)
 	public Integer save(Product product) {
 		
-		if (product.getId() == null) {
-			System.out.println(product);
+		/*if (product.getId() == null) {
 			manager.persist(product);
-			System.out.println("2");
 		} else {
 			update(product);
 		}
 		
 		manager.flush();
-		return  product.getId();
+		return  product.getId();*/
 
+		return SpringDAO.save(product).getId();
 	}
 
 	@Cacheable("ProductList")
@@ -45,9 +49,9 @@ public class ProductDAO {
 		manager.remove(p);
 	}
 	
-	private void update(Product product) {
+	/*private void update(Product product) {
 		manager.merge(product);
-	}
+	}*/
 	
 	public Product find(Integer productID) {
 		return manager.createQuery("SELECT p FROM Product p WHERE p.id="+productID+"", Product.class).getSingleResult();
